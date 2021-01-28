@@ -1,0 +1,29 @@
+.img {
+    width: 200px;
+    height: auto;
+}
+
+.container {
+    columns: 2;
+}
+
+.submit_button {
+    display: block;
+    background-color: #44aee3;
+    border: 1px solid #44aee3;
+    border-radius: 10px;
+    color: white;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    width: 100px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.input_amount {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
