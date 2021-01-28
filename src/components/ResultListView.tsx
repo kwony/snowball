@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 
 export interface ResultModel {
-    description: string,
+    descPrefix: string,
+    descSuffix: string,
     amount: number
 }
 
@@ -29,14 +30,12 @@ const ResultListView = (props: ResultListModel) => {
         <div className="container-fluid" style={{marginTop: '20px'}}>
         {
             props.results.map(result => (
-                <div className="row">
-                    <label className="col-sm-3" style={{ alignItems: 'center' }} >{result.description}</label> 
-                    <div className="col-sm-3">
-                        <NumberFormat 
+                <div className="row" style={{alignContent:'center'}}>
+                    <label>{result.descPrefix} </label><NumberFormat 
                             value={result.amount} 
+                            style={{ fontWeight:'bold', marginLeft:'2px' }}
                             displayType={'text'} thousandSeparator={true} suffix='원' />    
-                        ({converAmount(result.amount)})
-                    </div>
+                        ({converAmount(result.amount)})<label>{result.descSuffix}</label>
                 </div>
                 ))
         }
