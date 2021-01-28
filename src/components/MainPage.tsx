@@ -20,8 +20,6 @@ const MainPage = (props: any) => {
 
 
     useEffect(() => {
-
-
     }, [initialAmount, annualAmount, investYears, averageYearYield])
 
 
@@ -47,55 +45,93 @@ const MainPage = (props: any) => {
     
     return (
         <div>
-            <h1>This is Main Page</h1>
             <form onSubmit={(e) => onSubmit(e)}>
                 <div className="container-fluid">
+                    <div className="col-sm-6">
+                        <h1 style={{marginBottom: '20px', textAlign:'center'}}>투자해서 집살 수 있을까?</h1>
+                    </div>
                     <div className="row input_amount">
                         <label className="col-sm-3">초기 투자 금액은 얼마 인가요?</label> 
-                        <Numberformat value={initialAmount} allowNegative={false} thousandSeparator={true} suffix='원' className="col-sm-2" onValueChange={(e) => { setInitialAmount(parseFloat(e.value)) }} />
+                        <Numberformat 
+                            value={initialAmount} 
+                            allowNegative={false} 
+                            thousandSeparator={true} 
+                            suffix='원' 
+                            className="col-sm-3" 
+                            onValueChange={(e) => { setInitialAmount(parseFloat(e.value)) }} />
                     </div>
                     <div className="row input_amount">
                         <label className="control-label col-sm-3">연간 얼마나 추가로 넣으실 건가요?</label>
-                        <Numberformat value={annualAmount} allowNegative={false} thousandSeparator={true} suffix='원' className="col-sm-2" onValueChange={(e) => { setAnnualAmount(parseFloat(e.value)) }}/>
+                        <Numberformat 
+                            value={annualAmount} 
+                            allowNegative={false} 
+                            thousandSeparator={true} 
+                            suffix='원' className="col-sm-3" 
+                            onValueChange={(e) => { setAnnualAmount(parseFloat(e.value)) }}/>
                     </div>
                     <div className="row input_amount">
                         <label className="control-label col-sm-3">몇년 정도 투자 하실 건가요?</label>
-                        <Numberformat value={investYears} allowNegative={false} thousandSeparator={true} suffix='년' className="col-sm-2" onValueChange={(e) => { setInvestYears(parseFloat(e.value)) }}/>
+                        <Numberformat 
+                            value={investYears} 
+                            allowNegative={false} 
+                            thousandSeparator={true} 
+                            suffix='년' 
+                            className="col-sm-3" 
+                            onValueChange={(e) => { setInvestYears(parseFloat(e.value)) }}/>
                     </div>
                     <div className="row input_amount">
                         <label className="control-label col-sm-3">예상 연평균 수익률은?</label>
-                        <Numberformat value={averageYearYield} allowNegative={false} thousandSeparator={true} suffix='%' className="col-sm-2" onValueChange={(e) => { setAverageYearYield(parseFloat(e.value)) }}/>
+                        <Numberformat 
+                            value={averageYearYield} 
+                            allowNegative={false} 
+                            thousandSeparator={true} 
+                            suffix='%' 
+                            className="col-sm-3" 
+                            onValueChange={(e) => { setAverageYearYield(parseFloat(e.value)) }}/>
                     </div>
                 </div>
                 
             </form>
             <div className="container-fluid">
                 <div className="row">
-                    <button className="submit_button col-sm-2" onClick={() => {onSubmit(null)}}>계산하기</button>
-                    <button className="submit_button col-sm-2" 
-                        style={{ marginLeft: '20px' }}
+                    <button className="submit_button col-sm-6" onClick={() => {onSubmit(null)}}>계산하기</button>
+                </div>
+            </div>
+            <div className="container-fluid" style={{marginTop: '20px'}}>
+                <div className="row">
+                    <label className="col-sm-3" style={{ alignItems: 'center' }}>초기 비용 누적 금액</label> 
+                    <NumberFormat 
+                        className="col-sm-3" 
+                        value={result?.initialCumulative} 
+                        displayType={'text'} thousandSeparator={true} suffix='원' />    
+                </div>
+                <div className="row">
+                    <label className="col-sm-3">추가 입급 누적 금액</label> 
+                    <NumberFormat 
+                        className="col-sm-3" 
+                        value={result?.annualCumulative} 
+                        displayType={'text'} thousandSeparator={true} suffix='원' />    
+                </div>
+                <div className="row">
+                    <label className="col-sm-3">{investYears}년 후 받는 금액</label> 
+                    <NumberFormat 
+                        className="col-sm-3" 
+                        value={result?.resultCumulative} 
+                        displayType={'text'} thousandSeparator={true} suffix='원' />    
+                </div>
+            </div>
+
+            <div className="container-fluid">
+                <div className="row">
+                    <button className="submit_button col-sm-6" style={{marginTop: '20px'}}
                         onClick={() => {
                             setInitialAmount(0)
                             setAnnualAmount(0)
                             setAverageYearYield(0)
                             setInvestYears(0)
                         }}
-                    >초기화</button>
-                </div>
-                
-            </div>
-            <div className="container-fluid">
-                <div className="row">
-                    <label className="col-sm-3">초기 비용 누적 금액</label> 
-                    <NumberFormat value={result?.initialCumulative} displayType={'text'} thousandSeparator={true} suffix='원' />    
-                </div>
-                <div className="row">
-                    <label className="col-sm-3">추가 입급 누적 금액</label> 
-                    <NumberFormat value={result?.annualCumulative} displayType={'text'} thousandSeparator={true} suffix='원' />    
-                </div>
-                <div className="row">
-                    <label className="col-sm-3">{investYears}년 후 받는 금액</label> 
-                    <NumberFormat value={result?.resultCumulative} displayType={'text'} thousandSeparator={true} suffix='원' />    
+                    >초기화
+                    </button>
                 </div>
             </div>
         </div>
