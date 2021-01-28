@@ -49,6 +49,7 @@ const InvestForm = (props: InvestFormProps) => {
                     thousandSeparator={true} 
                     suffix='원' 
                     className="col-sm-8" 
+                    placeholder='10,000,000원'
                     onValueChange={(e) => { props.setInitialAmount(parseFloat(e.value)) }} />
             </div>
             <div className="row input_amount">
@@ -57,6 +58,7 @@ const InvestForm = (props: InvestFormProps) => {
                     allowNegative={false} 
                     thousandSeparator={true} 
                     suffix='원' className="col-sm-8" 
+                    placeholder='2,000,000원'
                     onValueChange={(e) => { props.setAnnualAmount(parseFloat(e.value)) }}/>
             </div>
             <div className="row input_amount">
@@ -66,6 +68,7 @@ const InvestForm = (props: InvestFormProps) => {
                     thousandSeparator={true} 
                     suffix='년' 
                     className="col-sm-8" 
+                    placeholder='20년'
                     onValueChange={(e) => { props.setInvestYears(parseFloat(e.value)) }}/>
             </div>
             <div className="row input_amount">
@@ -77,6 +80,7 @@ const InvestForm = (props: InvestFormProps) => {
                     suffix='%' 
                     className="col-sm-4" 
                     displayType={'input'}
+                    placeholder='10%'
                     onValueChange={(e) => { props.setAverageYearYield(parseFloat(e.value)) }}/>
                 <Select
                     className="col-sm-4"
