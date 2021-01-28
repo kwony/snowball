@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NumberFormat from 'react-number-format';
 import classNames from 'classnames';
 import './MainPage.scss';
+import ResultListView, { ResultListModel, ResultModel } from './ResultListView'
 
 interface InvestResult {
     initialCumulative: number,
@@ -17,22 +18,14 @@ const MainPage = (props: any) => {
     const [investYears, setInvestYears] = useState(0)
     const [averageYearYield, setAverageYearYield] = useState(0)
     const [result, setResult] = useState<InvestResult>()
-
+    const [resultList, setResultList] = useState<Array<ResultModel>>([])
 
     useEffect(() => {
     }, [initialAmount, annualAmount, investYears, averageYearYield])
 
 
     const onSubmit = (event: any) => {
-        event?.preventDefault()
-
-        console.log(`initialAmount: ${initialAmount}`)
-        console.log(`annualAmmount: ${annualAmount}`)
-        console.log(`investYears: ${investYears}`)
-        console.log(`averageYearYield: ${averageYearYield}`)
-
         const r = 1 + (averageYearYield / 100)
-
         const annualCumulative = (r == 1 ? annualAmount * investYears : ((Math.pow(r, investYears + 1) - 1) / (r - 1)) * annualAmount)
         const initialCumulative = Math.pow(r, investYears) * initialAmount
         const result = initialCumulative + annualCumulative
@@ -41,6 +34,14 @@ const MainPage = (props: any) => {
             annualCumulative: Math.floor(annualCumulative),
             resultCumulative: Math.floor(result)
         })
+
+        const results = Array<ResultModel>()
+
+        results.push({description: '초기 비용 누적 금액', amount: Math.floor(initialCumulative)})
+        results.push({description: '추가 입급 누적 금액', amount: Math.floor(annualCumulative)})
+        results.push({description: `${investYears}년 후 받는 금액`, amount: Math.floor(result)})
+
+        setResultList(results)
     }
     
     return (
@@ -97,29 +98,8 @@ const MainPage = (props: any) => {
                     <button className="submit_button col-sm-6" onClick={() => {onSubmit(null)}}>계산하기</button>
                 </div>
             </div>
-            <div className="container-fluid" style={{marginTop: '20px'}}>
-                <div className="row">
-                    <label className="col-sm-3" style={{ alignItems: 'center' }}>초기 비용 누적 금액</label> 
-                    <NumberFormat 
-                        className="col-sm-3" 
-                        value={result?.initialCumulative} 
-                        displayType={'text'} thousandSeparator={true} suffix='원' />    
-                </div>
-                <div className="row">
-                    <label className="col-sm-3">추가 입급 누적 금액</label> 
-                    <NumberFormat 
-                        className="col-sm-3" 
-                        value={result?.annualCumulative} 
-                        displayType={'text'} thousandSeparator={true} suffix='원' />    
-                </div>
-                <div className="row">
-                    <label className="col-sm-3">{investYears}년 후 받는 금액</label> 
-                    <NumberFormat 
-                        className="col-sm-3" 
-                        value={result?.resultCumulative} 
-                        displayType={'text'} thousandSeparator={true} suffix='원' />    
-                </div>
-            </div>
+
+            <ResultListView results={resultList} />
 
             <div className="container-fluid">
                 <div className="row">
