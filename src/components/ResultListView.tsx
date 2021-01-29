@@ -7,11 +7,11 @@ export interface ResultModel {
     amount: number
 }
 
-export interface ResultListModel {
+export interface ResultViewProps {
     results: Array<ResultModel>
 }
 
-const ResultListView = (props: ResultListModel) => {
+const ResultView = (props: ResultViewProps) => {
     const converAmount = (amount: number) => {
         const ukUnit = 10000 * 10000
         const manUnit = 10000
@@ -43,4 +43,4 @@ const ResultListView = (props: ResultListModel) => {
     )
 }
 
-export default ResultListView;
+export default ResultView;

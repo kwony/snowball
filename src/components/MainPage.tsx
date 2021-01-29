@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Numberformat from 'react-number-format';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import classNames from 'classnames';
 import './MainPage.scss';
-import ResultListView, { ResultListModel, ResultModel } from './ResultListView'
-import InvestForm, { InvestFormProps } from './InvestForm'
+import ResultView, { ResultModel } from './ResultListView'
+import InvestForm from './InvestForm'
 
 const MainPage = (props: any) => {
     const [initialAmount, setInitialAmount] = useState(0)
@@ -39,7 +37,7 @@ const MainPage = (props: any) => {
     }
     
     return (
-        <div style={{margin: 'auto', width: '60%'}}>
+        <div className="parent">
             <InvestForm 
                 refresh={refresh}
                 setInitialAmount={setInitialAmount}
@@ -53,7 +51,7 @@ const MainPage = (props: any) => {
                 </div>
             </div>
 
-            <ResultListView results={resultList} />
+            <ResultView results={resultList} />
             {
                 resultList.length > 0 && (
                     <div className="container-fluid">
