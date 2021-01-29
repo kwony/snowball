@@ -46,7 +46,7 @@ const ResultView = (props: ResultViewProps) => {
       x: snowball.investYear,
       y: snowball.amount,
     }));
-    
+
     const results = Array<ResultModel>();
 
     results.push({
@@ -137,12 +137,12 @@ const ResultView = (props: ResultViewProps) => {
           }}
           yDomain={[props.initialAmount, props.totalSnowball]}
           width={width}
-          height={(width * 0.9 * 9) / 16}
+          height={(width * 9) / 16}
         >
           <HorizontalGridLines />
           <VerticalGridLines />
           <XAxis />
-          <YAxis tickFormat={(tick) => numberFormatter(tick, 1)} />
+          <YAxis tickFormat={(tick: any) => numberFormatter(tick, 1)} />
           <ChartLabel
             text="투자 기간"
             className="alt-x-label"

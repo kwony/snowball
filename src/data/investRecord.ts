@@ -1,6 +1,6 @@
 export interface record {
     title: string,
-    averageYield: number | null
+    averageYield: number | null | string
 }
 
 export const recordList: Array<record> = [

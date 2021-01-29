@@ -32,9 +32,20 @@ const customStyles = {
 
 const InvestForm = (props: InvestFormProps) => {
   const [recordYield, setRecordYield] = useState(null);
+  const [options, setOptions] = useState<Array<any>>([])
+  const [selectedOption, setSelectedOption] = useState<any>()
 
   useEffect(() => {}, [props.refresh]);
+  
+  useEffect(() => {
+    const options = recordList.map((record) => ({
+        label: record.title,
+        value: record.averageYield,
+      }))
 
+      setOptions(options)
+      setSelectedOption(options[0])
+}, [])
   return (
     <div className="container-fluid">
       <div>
@@ -100,14 +111,13 @@ const InvestForm = (props: InvestFormProps) => {
         />
         <Select
           className="col-sm-4"
-          options={recordList.map((record) => ({
-            label: record.title,
-            value: record.averageYield,
-          }))}
+          options={options}
           onChange={(record: any) => {
             console.log(record);
             setRecordYield(record.value);
+            setSelectedOption(record)
           }}
+          value={selectedOption}
         />
       </div>
     </div>
