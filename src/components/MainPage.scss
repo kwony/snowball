@@ -8,19 +8,19 @@
 }
 
 .submit_button {
-    display: block;
     background-color: #44aee3;
     border: 1px solid #44aee3;
     border-radius: 10px;
     color: white;
     padding-top: 16px;
     padding-bottom: 16px;
-    width: 100px;
+    width: 100%;
     font-size: 16px;
     cursor: pointer;
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
+    display: block;
 }
 
 .input_amount {
@@ -29,6 +29,6 @@
 }
 
 .parent {
-    width: '100%';
-    margin: 'auto';
+    width: auto;
+    margin: 1.0rem;
 }
