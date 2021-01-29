@@ -23,6 +23,7 @@ const MainPage = (props: any) => {
     totalSnowball: 0,
     investYears: 0,
     snowballList: [],
+    compareList: []
   });
 
   useEffect(() => {}, [
@@ -63,11 +64,16 @@ const MainPage = (props: any) => {
     const totalSnowball = initialSnowball + annualCumulative;
 
     const snowballList = Array<InvestModel>();
+    const compareList = Array<InvestModel>();
     for (var year = 1; year <= investYears; year++) {
       snowballList.push({
         investYear: year,
         amount: calculateByAnnual(initialAmount, annualAmount, r, year),
       });
+      compareList.push({
+        investYear: year,
+        amount: calculateByAnnual(initialAmount, annualAmount, 1, year)
+      })
     }
 
     setResultViewProps({
@@ -78,6 +84,7 @@ const MainPage = (props: any) => {
       totalSnowball: totalSnowball,
       investYears: investYears,
       snowballList: snowballList,
+      compareList: compareList
     });
   };
 
@@ -109,6 +116,7 @@ const MainPage = (props: any) => {
         totalSnowball={resultViewProps.totalSnowball}
         investYears={resultViewProps.investYears}
         snowballList={resultViewProps.snowballList}
+        compareList={resultViewProps.compareList}
       />
       {resultList.length > 0 && (
         <div className="container-fluid">

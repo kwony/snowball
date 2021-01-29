@@ -1,6 +1,5 @@
 import React, { useRef, useLayoutEffect, useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
-import useWindowDimensions from "../utils/useWindowDimensions";
 import useDimensions from "../utils/useDimensions";
 
 import {
@@ -12,6 +11,7 @@ import {
   VerticalGridLines,
   LineSeries,
   LineSeriesCanvas,
+  LabelSeries,
 } from "react-vis";
 
 export interface ResultModel {
@@ -33,19 +33,32 @@ export interface ResultViewProps {
   annualSnowball: number;
   totalSnowball: number;
   snowballList: Array<InvestModel>;
+  compareList: Array<InvestModel>;
 }
 
 const ResultView = (props: ResultViewProps) => {
-  const [graphData, setGraphData] = useState<Array<any>>([]);
+  const [investLineData, setInvestLineData] = useState<Array<any>>([]);
+  const [investLabelData, setInvestLabelData] = useState<Array<any>>([]);
+  const [compareLineData, setCompareLineData] = useState<Array<any>>([]);
+  const [compareLabelData, setCompareLabelData] = useState<Array<any>>([]);
   const [resultList, setResultList] = useState<Array<ResultModel>>([]);
   const targetRef: any = useRef();
   const { height, width } = useDimensions(targetRef);
 
   useEffect(() => {
-    const graphData = props.snowballList.map((snowball) => ({
+    const investLineData = props.snowballList.map((snowball) => ({
       x: snowball.investYear,
       y: snowball.amount,
     }));
+
+    setInvestLabelData(parseLabelData(props.snowballList, -10));
+
+    const compareLineData = props.compareList.map((compare) => ({
+      x: compare.investYear,
+      y: compare.amount,
+    }));
+
+    setCompareLabelData(parseLabelData(props.compareList, 10));
 
     const results = Array<ResultModel>();
 
@@ -70,7 +83,8 @@ const ResultView = (props: ResultViewProps) => {
     });
 
     setResultList(results);
-    setGraphData(graphData);
+    setInvestLineData(investLineData);
+    setCompareLineData(compareLineData);
   }, [props]);
 
   const readableWon = (amount: number) => {
@@ -78,11 +92,11 @@ const ResultView = (props: ResultViewProps) => {
     const manUnit = 10000;
 
     const ukMoney = Math.floor(amount / ukUnit);
-    const ukString = ukMoney > 0 ? `${ukMoney}억 ` : "";
+    const ukString = ukMoney > 0 ? `${ukMoney}억` : "";
     const manMoney = Math.floor(Math.floor(amount % ukUnit) / manUnit);
-    const manString = manMoney > 0 ? `${manMoney}만 ` : "";
+    const manString = manMoney > 0 ? `${manMoney}만` : "";
     const restMoney = Math.floor(amount % manUnit);
-    const restString = restMoney >= 0 ? `${restMoney}` : "";
+    const restString = restMoney > 0 ? `${restMoney}` : "";
 
     return `${ukString}${manString}${restString}원`;
   };
@@ -108,6 +122,23 @@ const ResultView = (props: ResultViewProps) => {
     return smallNum + si[i].symbol;
   };
 
+  const parseLabelData = (list: Array<InvestModel>, yOffset: number) => {
+    const labelList = [];
+    for (var i = 0; i < list.length; i++) {
+      if (i % 5 == 0 || i == list.length - 1) {
+        labelList.push(list[i]);
+      }
+    }
+
+    return labelList.map((snowball) => ({
+      x: snowball.investYear,
+      y: snowball.amount,
+      label: numberFormatter(snowball.amount, 1),
+      style: { fontSize: 9 },
+      yOffset: yOffset,
+    }));
+  };
+
   return (
     <div style={{ marginTop: "20px" }} ref={targetRef}>
       {props.totalSnowball != 0 &&
@@ -130,7 +161,7 @@ const ResultView = (props: ResultViewProps) => {
         ))}
       <div>
         <XYPlot
-          margin={{ left: width * 0.2, right: width * 0.2 }}
+          margin={{ left: 0, right: width * 0.15 }}
           style={{
             marginTop: "20px",
             alignContent: "center",
@@ -140,26 +171,11 @@ const ResultView = (props: ResultViewProps) => {
           height={(width * 9) / 16}
         >
           <HorizontalGridLines />
-          <VerticalGridLines />
           <XAxis />
-          <YAxis tickFormat={(tick: any) => numberFormatter(tick, 1)} />
-          <ChartLabel
-            text="투자 기간"
-            className="alt-x-label"
-            includeMargin={false}
-            xPercent={0.95}
-            yPercent={0.95}
-          />
-
-          <ChartLabel
-            text="금액"
-            className="alt-y-label"
-            includeMargin={true}
-            xPercent={1.0}
-            yPercent={1.0}
-            style={{
-              textAnchor: "end",
-            }}
+          <YAxis
+            hideLine={true}
+            orientation={"right"}
+            tickFormat={(tick: any) => numberFormatter(tick, 1)}
           />
           <LineSeries
             className="first-series"
@@ -168,8 +184,19 @@ const ResultView = (props: ResultViewProps) => {
               strokeWidth: 4,
             }}
             color={"#44aee3"}
-            data={graphData}
+            data={investLineData}
           />
+          {/* <LabelSeries data={investLabelData} /> */}
+          <LineSeries
+            className="first-series"
+            style={{
+              strokeLinejoin: "round",
+              strokeWidth: 4,
+            }}
+            color={"#d8d8d8"}
+            data={compareLineData}
+          />
+          {/* <LabelSeries data={compareLabelData} /> */}
         </XYPlot>
       </div>
     </div>
