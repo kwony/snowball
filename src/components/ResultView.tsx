@@ -14,6 +14,8 @@ import {
   LabelSeries,
 } from "react-vis";
 
+import { curveCatmullRom, curveLinear } from "d3-shape";
+
 export interface ResultModel {
   descPrefix: string;
   descSuffix: string;
@@ -34,6 +36,10 @@ export interface ResultViewProps {
   totalSnowball: number;
   snowballList: Array<InvestModel>;
   compareList: Array<InvestModel>;
+}
+
+function convertRemToPixels(rem: any) {
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
 
 const ResultView = (props: ResultViewProps) => {
@@ -101,31 +107,30 @@ const ResultView = (props: ResultViewProps) => {
     return `${ukString}${manString}${restString}원`;
   };
 
-  const numberFormatter = (num: number, digits: number) => {
+  const numberFormatter = (num: number, toFixed: number) => {
     var si = [
       { value: 1, symbol: "" },
       { value: 1e4, symbol: "만원" },
       { value: 1e8, symbol: "억원" },
       { value: 1e12, symbol: "조원" },
     ];
-    var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
     for (var i = si.length - 1; i > 0; i--) {
       if (num >= si[i].value) {
         break;
       }
     }
 
-    var smallNum =
-      num / si[i].value >= 1000
-        ? `${num / si[i].value / 1000}k`
-        : `${num / si[i].value}`;
-    return smallNum + si[i].symbol;
+    const numStr =
+      i >= 2
+        ? `${(num / si[i].value).toFixed(1)}`
+        : `${Math.floor(num / si[i].value)}`;
+    return numStr + si[i].symbol;
   };
 
   const parseLabelData = (list: Array<InvestModel>, yOffset: number) => {
     const labelList = [];
     for (var i = 0; i < list.length; i++) {
-      if (i % 5 == 0 || i == list.length - 1) {
+      if (i == 0 || i == list.length / 2 || i == list.length - 1) {
         labelList.push(list[i]);
       }
     }
@@ -134,7 +139,7 @@ const ResultView = (props: ResultViewProps) => {
       x: snowball.investYear,
       y: snowball.amount,
       label: numberFormatter(snowball.amount, 1),
-      style: { fontSize: 9 },
+      style: { fontSize: width * 0.03 },
       yOffset: yOffset,
     }));
   };
@@ -161,7 +166,7 @@ const ResultView = (props: ResultViewProps) => {
         ))}
       <div>
         <XYPlot
-          margin={{ left: 0, right: width * 0.15 }}
+          margin={{ left: 0, right: 0 }}
           style={{
             marginTop: "20px",
             alignContent: "center",
@@ -171,7 +176,12 @@ const ResultView = (props: ResultViewProps) => {
           height={(width * 9) / 16}
         >
           <HorizontalGridLines />
-          <XAxis />
+          <XAxis
+            tickSize={4}
+            tickTotal={2}
+            tickLabelAngle={-30}
+            tickFormat={(tick: any) => `${tick}년`}
+          />
           <YAxis
             hideLine={true}
             orientation={"right"}
@@ -180,23 +190,26 @@ const ResultView = (props: ResultViewProps) => {
           <LineSeries
             className="first-series"
             style={{
-              strokeLinejoin: "round",
-              strokeWidth: 4,
+              strokeLinejoin: "unset",
+              strokeWidth: 2,
             }}
             color={"#44aee3"}
+            curve={"curveLinear"}
             data={investLineData}
           />
-          {/* <LabelSeries data={investLabelData} /> */}
+          <LabelSeries data={investLabelData} />
           <LineSeries
             className="first-series"
             style={{
               strokeLinejoin: "round",
-              strokeWidth: 4,
+              strokeWidth: 2,
             }}
+            curve={"curveLinear"}
             color={"#d8d8d8"}
             data={compareLineData}
           />
-          {/* <LabelSeries data={compareLabelData} /> */}
+
+          <LabelSeries data={compareLabelData} />
         </XYPlot>
       </div>
     </div>

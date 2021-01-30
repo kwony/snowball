@@ -54,7 +54,7 @@ const InvestForm = (props: InvestFormProps) => {
         </h1>
       </div>
       <div className="row input_amount">
-        <label className="col-sm-4">초기 투자 금액은 얼마 인가요?</label>
+        <label className="col-sm-4" style={{marginLeft:'0'}}>초기 투자 금액은 얼마 인가요?</label>
         <Numberformat
           thousandSeparator={true}
           suffix="원"

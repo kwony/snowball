@@ -31,5 +31,9 @@ export const recordList: Array<record> = [
     {
         title: '2020년 20대 남자 주식계좌 수익률', // https://www.mk.co.kr/news/society/view/2021/01/26577/
         averageYield: 3.81
+    },
+    {
+        title: '20년간 서울 아파트 연평균 상승률', // https://news.mt.co.kr/mtview.php?no=2020072910311432840
+        averageYield: '6.4'
     }
 ]
