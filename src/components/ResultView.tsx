@@ -152,14 +152,16 @@ const ResultView = (props: ResultViewProps) => {
             <div>
               <label className="col-sm-12" style={{ textAlign: "center" }}>
                 {result.descPrefix}
+                <label style={{fontWeight:"bold", marginLeft:"2px"}}>{readableWon(result.amount)}</label>
                 <NumberFormat
                   value={result.amount}
-                  style={{ fontWeight: "bold", marginLeft: "2px" }}
+                  style={{ marginLeft: "2px" }}
                   displayType={"text"}
                   thousandSeparator={true}
-                  suffix="원"
+                  prefix="("
+                  suffix="원)"
                 />
-                ({readableWon(result.amount)})<label>{result.descSuffix}</label>
+                <label>{result.descSuffix}</label>
               </label>
             </div>
           </div>
