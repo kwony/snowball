@@ -54,7 +54,7 @@ const MainPage = (props: any) => {
     return Math.floor(annualCumulative + initialCumulative);
   };
 
-  const onSubmit = (event: any) => {
+  function onSubmit() {
     const r = 1 + averageYearYield / 100;
     const annualCumulative =
       r == 1
@@ -96,17 +96,8 @@ const MainPage = (props: any) => {
         setAnnualAmount={setAnnualAmount}
         setInvestYears={setInvestYears}
         setAverageYearYield={setAverageYearYield}
+        onSubmit={onSubmit}
       />
-      <div>
-        <button
-          className="submit_button"
-          onClick={() => {
-            onSubmit(null);
-          }}
-        >
-          계산하기
-        </button>
-      </div>
 
       <ResultView
         initialAmount={initialAmount}

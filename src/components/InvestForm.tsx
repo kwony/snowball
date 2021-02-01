@@ -3,6 +3,7 @@ import NumberFormat from "react-number-format";
 import Numberformat from "react-number-format";
 import { record, recordList } from "../data/investRecord";
 import Select from "react-select";
+import "./InvestForm.scss";
 
 export interface InvestFormProps {
   refresh: boolean;
@@ -10,6 +11,7 @@ export interface InvestFormProps {
   setAnnualAmount(amount: number): void;
   setInvestYears(year: number): void;
   setAverageYearYield(ayy: number): void;
+  onSubmit(): void;
 }
 
 const customStyles = {
@@ -36,11 +38,16 @@ const InvestForm = (props: InvestFormProps) => {
     setSelectedOption(options[0]);
   }, []);
   return (
-    <div className="container-fluid">
+    <div className="invest container-full">
       <div className="row">
         <label
           className="col-md-12"
-          style={{ marginBottom: "10px", textAlign: "center", fontSize: "24px", fontWeight: "bold" }}
+          style={{
+            marginBottom: "10px",
+            textAlign: "center",
+            fontSize: "24px",
+            fontWeight: "bold",
+          }}
         >
           투자해서 얼마나 벌 수 있을까?
         </label>
@@ -119,6 +126,14 @@ const InvestForm = (props: InvestFormProps) => {
           styles={customStyles}
           value={selectedOption}
         />
+      </div>
+      <div className="row">
+        <button
+          className="submit_button col-md-12"
+          onClick={props.onSubmit}
+        >
+          계산하기
+        </button>
       </div>
     </div>
   );
