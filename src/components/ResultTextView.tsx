@@ -47,10 +47,13 @@ const ResultTextView = (props: ResultTextViewProps) => {
     const manUnit = 10000;
 
     const ukMoney = Math.floor(amount / ukUnit);
-    const ukString = ukMoney > 0 ? `${ukMoney}억` : "";
     const manMoney = Math.floor(Math.floor(amount % ukUnit) / manUnit);
-    const manString = manMoney > 0 ? `${manMoney}만` : "";
+    const ukSpace = manMoney > 0 ? ' ' : ""
     const restMoney = Math.floor(amount % manUnit);
+    const manSpace = restMoney > 0 ? ' ' : ""
+
+    const ukString = ukMoney > 0 ? `${ukMoney}억${ukSpace}` : "";
+    const manString = manMoney > 0 ? `${manMoney}만${manSpace}` : "";
     const restString = restMoney > 0 ? `${restMoney}` : "";
 
     return `${ukString}${manString}${restString}원`;
