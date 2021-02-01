@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./MainPage.scss";
-import ResultView, {
-  ResultModel,
-  InvestModel,
-  ResultViewProps,
-} from "./ResultView";
+import ResultTextView from "./ResultTextView";
+import ResultGraphView from "./ResultGraphView";
+import { ResultModel, InvestModel } from "../model/InvestModels";
 import InvestForm from "./InvestForm";
+import '../style/base.scss'
+import "./MainPage.scss";
+
+interface ResultData {
+  initialAmount: number;
+  annualAmount: number;
+  investYears: number;
+  initialSnowball: number;
+  annualSnowball: number;
+  totalSnowball: number;
+  snowballList: Array<InvestModel>;
+  compareList: Array<InvestModel>;
+}
 
 const MainPage = (props: any) => {
   const [initialAmount, setInitialAmount] = useState(0);
@@ -15,7 +25,7 @@ const MainPage = (props: any) => {
   const [averageYearYield, setAverageYearYield] = useState(0);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [resultList, setResultList] = useState<Array<ResultModel>>([]);
-  const [resultViewProps, setResultViewProps] = useState<ResultViewProps>({
+  const [resultData, setResultData] = useState<ResultData>({
     initialAmount: 0,
     annualAmount: 0,
     initialSnowball: 0,
@@ -23,7 +33,7 @@ const MainPage = (props: any) => {
     totalSnowball: 0,
     investYears: 0,
     snowballList: [],
-    compareList: []
+    compareList: [],
   });
 
   useEffect(() => {}, [
@@ -72,11 +82,11 @@ const MainPage = (props: any) => {
       });
       compareList.push({
         investYear: year,
-        amount: calculateByAnnual(initialAmount, annualAmount, 1, year)
-      })
+        amount: calculateByAnnual(initialAmount, annualAmount, 1, year),
+      });
     }
 
-    setResultViewProps({
+    setResultData({
       initialAmount: initialAmount,
       annualAmount: annualAmount,
       initialSnowball: initialSnowball,
@@ -84,9 +94,9 @@ const MainPage = (props: any) => {
       totalSnowball: totalSnowball,
       investYears: investYears,
       snowballList: snowballList,
-      compareList: compareList
+      compareList: compareList,
     });
-  };
+  }
 
   return (
     <div className="parent">
@@ -97,7 +107,7 @@ const MainPage = (props: any) => {
             textAlign: "center",
             fontSize: "24px",
             fontWeight: "bold",
-            marginTop: '10px'
+            marginTop: "10px",
           }}
         >
           투자해서 얼마나 벌 수 있을까?
@@ -114,37 +124,25 @@ const MainPage = (props: any) => {
         setAverageYearYield={setAverageYearYield}
         onSubmit={onSubmit}
       />
+      <div className="line" style={{ marginTop: "10px" }} />
 
-      <div className="line" style={{marginTop: '10px'}} />
+      {resultData.totalSnowball > 0 && (
+        <div>
+          <ResultTextView
+            initialAmount={initialAmount}
+            annualAmount={annualAmount}
+            initialSnowball={resultData.initialSnowball}
+            annualSnowball={resultData.annualSnowball}
+            totalSnowball={resultData.totalSnowball}
+            investYears={resultData.investYears}
+          />
 
-      <ResultView
-        initialAmount={initialAmount}
-        annualAmount={annualAmount}
-        initialSnowball={resultViewProps.initialSnowball}
-        annualSnowball={resultViewProps.annualSnowball}
-        totalSnowball={resultViewProps.totalSnowball}
-        investYears={resultViewProps.investYears}
-        snowballList={resultViewProps.snowballList}
-        compareList={resultViewProps.compareList}
-      />
-      {resultList.length > 0 && (
-        <div className="container-fluid">
-          <div className="row">
-            <button
-              className="submit_button col-sm-12"
-              style={{ marginTop: "20px" }}
-              onClick={() => {
-                setInitialAmount(0);
-                setAnnualAmount(0);
-                setAverageYearYield(0);
-                setInvestYears(0);
-                setRefresh(true);
-                setResultList([]);
-              }}
-            >
-              초기화
-            </button>
-          </div>
+          <ResultGraphView
+            initialAmount={initialAmount}
+            totalSnowball={resultData.totalSnowball}
+            snowballList={resultData.snowballList}
+            compareList={resultData.compareList}
+          />
         </div>
       )}
     </div>
