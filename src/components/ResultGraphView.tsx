@@ -18,6 +18,7 @@ export interface ResultGraphViewProps {
   compareList: Array<InvestModel>;
   initialAmount: number;
   totalSnowball: number;
+  investYears: number;
 }
 
 const ResultGraphView = (props: ResultGraphViewProps) => {
@@ -89,7 +90,7 @@ const ResultGraphView = (props: ResultGraphViewProps) => {
 
   return (
     <div style={{marginTop:'1.0rem', marginLeft:'1.6rem', marginRight:'1.6rem'}} ref={typeRef}>
-      <label className="col-sm-12" style={{textAlign:'center'}}>20년간 투자금액 변화</label>
+      <label className="col-sm-12" style={{textAlign:'center', fontWeight:'bold'}}>{props.investYears}년간 투자금액 변화</label>
       <XYPlot
         margin={{ left: 0, right: 0 }}
         style={{

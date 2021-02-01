@@ -142,6 +142,7 @@ const MainPage = (props: any) => {
             totalSnowball={resultData.totalSnowball}
             snowballList={resultData.snowballList}
             compareList={resultData.compareList}
+            investYears={resultData.investYears}
           />
         </div>
       )}
