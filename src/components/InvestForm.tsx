@@ -15,35 +15,40 @@ export interface InvestFormProps {
 const customStyles = {
   container: (base: any) => ({
     ...base,
-    padding: 0
-}),
+    padding: 0,
+  }),
 };
 
 const InvestForm = (props: InvestFormProps) => {
   const [recordYield, setRecordYield] = useState(null);
-  const [options, setOptions] = useState<Array<any>>([])
-  const [selectedOption, setSelectedOption] = useState<any>()
+  const [options, setOptions] = useState<Array<any>>([]);
+  const [selectedOption, setSelectedOption] = useState<any>();
 
   useEffect(() => {}, [props.refresh]);
-  
+
   useEffect(() => {
     const options = recordList.map((record) => ({
-        label: record.title,
-        value: record.averageYield,
-      }))
+      label: record.title,
+      value: record.averageYield,
+    }));
 
-      setOptions(options)
-      setSelectedOption(options[0])
-}, [])
+    setOptions(options);
+    setSelectedOption(options[0]);
+  }, []);
   return (
     <div className="container-fluid">
-      <div>
-        <h1 style={{ marginBottom: "20px", textAlign: "center" }}>
+      <div className="row">
+        <label
+          className="col-md-12"
+          style={{ marginBottom: "10px", textAlign: "center", fontSize: "24px", fontWeight: "bold" }}
+        >
           투자해서 얼마나 벌 수 있을까?
-        </h1>
+        </label>
       </div>
       <div className="row input_amount">
-        <div style={{padding: 0}} className="col-md-4">초기 투자 금액은 얼마 인가요?</div>
+        <div style={{ padding: 0 }} className="col-md-4">
+          초기 투자 금액은 얼마 인가요?
+        </div>
         <Numberformat
           thousandSeparator={true}
           suffix="원"
@@ -55,7 +60,7 @@ const InvestForm = (props: InvestFormProps) => {
         />
       </div>
       <div className="row input_amount">
-        <label style={{padding: 0}} className="control-label col-sm-4">
+        <label style={{ padding: 0 }} className="control-label col-sm-4">
           연간 얼마나 추가로 넣으실 건가요?
         </label>
         <Numberformat
@@ -70,7 +75,7 @@ const InvestForm = (props: InvestFormProps) => {
         />
       </div>
       <div className="row input_amount">
-        <label style={{padding: 0}} className="control-label col-sm-4">
+        <label style={{ padding: 0 }} className="control-label col-sm-4">
           몇년 정도 투자 하실 건가요?
         </label>
         <Numberformat
@@ -85,7 +90,9 @@ const InvestForm = (props: InvestFormProps) => {
         />
       </div>
       <div className="row input_amount">
-        <label style={{padding: 0}} className="control-label col-sm-4">예상 연평균 수익률은?</label>
+        <label style={{ padding: 0 }} className="control-label col-sm-4">
+          예상 연평균 수익률은?
+        </label>
         <Numberformat
           value={recordYield}
           allowNegative={false}
@@ -97,6 +104,9 @@ const InvestForm = (props: InvestFormProps) => {
           onValueChange={(e) => {
             props.setAverageYearYield(parseFloat(e.value));
           }}
+          style={{
+            marginRight: "10",
+          }}
         />
         <Select
           className="col-sm-4"
@@ -104,7 +114,7 @@ const InvestForm = (props: InvestFormProps) => {
           onChange={(record: any) => {
             console.log(record);
             setRecordYield(record.value);
-            setSelectedOption(record)
+            setSelectedOption(record);
           }}
           styles={customStyles}
           value={selectedOption}
