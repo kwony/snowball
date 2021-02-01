@@ -90,6 +90,22 @@ const MainPage = (props: any) => {
 
   return (
     <div className="parent">
+      <div>
+        <label
+          className="col-md-12"
+          style={{
+            textAlign: "center",
+            fontSize: "24px",
+            fontWeight: "bold",
+            marginTop: '10px'
+          }}
+        >
+          투자해서 얼마나 벌 수 있을까?
+        </label>
+      </div>
+
+      <div className="line" />
+
       <InvestForm
         refresh={refresh}
         setInitialAmount={setInitialAmount}
@@ -98,6 +114,8 @@ const MainPage = (props: any) => {
         setAverageYearYield={setAverageYearYield}
         onSubmit={onSubmit}
       />
+
+      <div className="line" style={{marginTop: '10px'}} />
 
       <ResultView
         initialAmount={initialAmount}

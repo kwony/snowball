@@ -38,102 +38,88 @@ const InvestForm = (props: InvestFormProps) => {
     setSelectedOption(options[0]);
   }, []);
   return (
-    <div className="invest container-full">
-      <div className="row">
-        <label
-          className="col-md-12"
-          style={{
-            marginBottom: "10px",
-            textAlign: "center",
-            fontSize: "24px",
-            fontWeight: "bold",
-          }}
-        >
-          투자해서 얼마나 벌 수 있을까?
-        </label>
-      </div>
-      <div className="row input_amount">
-        <div style={{ padding: 0 }} className="col-md-4">
-          초기 투자 금액은 얼마 인가요?
+    <div>
+      <div className="invest container-full">
+        <div className="row input_amount">
+          <div style={{ padding: 0 }} className="col-md-4">
+            초기 투자 금액은 얼마 인가요?
+          </div>
+          <Numberformat
+            thousandSeparator={true}
+            suffix="원"
+            className="col-md-8"
+            placeholder="10,000,000원"
+            onValueChange={(e) => {
+              props.setInitialAmount(parseFloat(e.value));
+            }}
+          />
         </div>
-        <Numberformat
-          thousandSeparator={true}
-          suffix="원"
-          className="col-md-8"
-          placeholder="10,000,000원"
-          onValueChange={(e) => {
-            props.setInitialAmount(parseFloat(e.value));
-          }}
-        />
-      </div>
-      <div className="row input_amount">
-        <label style={{ padding: 0 }} className="control-label col-sm-4">
-          연간 얼마나 추가로 넣으실 건가요?
-        </label>
-        <Numberformat
-          allowNegative={false}
-          thousandSeparator={true}
-          suffix="원"
-          className="col-sm-8"
-          placeholder="2,000,000원"
-          onValueChange={(e) => {
-            props.setAnnualAmount(parseFloat(e.value));
-          }}
-        />
-      </div>
-      <div className="row input_amount">
-        <label style={{ padding: 0 }} className="control-label col-sm-4">
-          몇년 정도 투자 하실 건가요?
-        </label>
-        <Numberformat
-          allowNegative={false}
-          thousandSeparator={true}
-          suffix="년"
-          className="col-sm-8"
-          placeholder="20년"
-          onValueChange={(e) => {
-            props.setInvestYears(parseFloat(e.value));
-          }}
-        />
-      </div>
-      <div className="row input_amount">
-        <label style={{ padding: 0 }} className="control-label col-sm-4">
-          예상 연평균 수익률은?
-        </label>
-        <Numberformat
-          value={recordYield}
-          allowNegative={false}
-          thousandSeparator={true}
-          suffix="%"
-          className="col-sm-4"
-          displayType={"input"}
-          placeholder="10%"
-          onValueChange={(e) => {
-            props.setAverageYearYield(parseFloat(e.value));
-          }}
-          style={{
-            marginRight: "10",
-          }}
-        />
-        <Select
-          className="col-sm-4"
-          options={options}
-          onChange={(record: any) => {
-            console.log(record);
-            setRecordYield(record.value);
-            setSelectedOption(record);
-          }}
-          styles={customStyles}
-          value={selectedOption}
-        />
-      </div>
-      <div className="row">
-        <button
-          className="submit_button col-md-12"
-          onClick={props.onSubmit}
-        >
-          계산하기
-        </button>
+        <div className="row input_amount">
+          <label style={{ padding: 0 }} className="control-label col-sm-4">
+            연간 얼마나 추가로 넣으실 건가요?
+          </label>
+          <Numberformat
+            allowNegative={false}
+            thousandSeparator={true}
+            suffix="원"
+            className="col-sm-8"
+            placeholder="2,000,000원"
+            onValueChange={(e) => {
+              props.setAnnualAmount(parseFloat(e.value));
+            }}
+          />
+        </div>
+        <div className="row input_amount">
+          <label style={{ padding: 0 }} className="control-label col-sm-4">
+            몇년 정도 투자 하실 건가요?
+          </label>
+          <Numberformat
+            allowNegative={false}
+            thousandSeparator={true}
+            suffix="년"
+            className="col-sm-8"
+            placeholder="20년"
+            onValueChange={(e) => {
+              props.setInvestYears(parseFloat(e.value));
+            }}
+          />
+        </div>
+        <div className="row input_amount">
+          <label style={{ padding: 0 }} className="control-label col-sm-4">
+            예상 연평균 수익률은?
+          </label>
+          <Numberformat
+            value={recordYield}
+            allowNegative={false}
+            thousandSeparator={true}
+            suffix="%"
+            className="col-sm-4"
+            displayType={"input"}
+            placeholder="10%"
+            onValueChange={(e) => {
+              props.setAverageYearYield(parseFloat(e.value));
+            }}
+            style={{
+              marginRight: "10",
+            }}
+          />
+          <Select
+            className="col-sm-4"
+            options={options}
+            onChange={(record: any) => {
+              console.log(record);
+              setRecordYield(record.value);
+              setSelectedOption(record);
+            }}
+            styles={customStyles}
+            value={selectedOption}
+          />
+        </div>
+        <div className="row">
+          <button className="submit_button col-md-12" onClick={props.onSubmit}>
+            계산하기
+          </button>
+        </div>
       </div>
     </div>
   );

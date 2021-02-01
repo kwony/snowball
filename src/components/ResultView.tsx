@@ -38,10 +38,6 @@ export interface ResultViewProps {
   compareList: Array<InvestModel>;
 }
 
-function convertRemToPixels(rem: any) {
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-}
-
 const ResultView = (props: ResultViewProps) => {
   const [investLineData, setInvestLineData] = useState<Array<any>>([]);
   const [investLabelData, setInvestLabelData] = useState<Array<any>>([]);
