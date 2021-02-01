@@ -29,7 +29,7 @@ const ResultTextView = (props: ResultTextViewProps) => {
     results.push({
       descPrefix: `${props.investYears}년동안 ${readableWon(
         props.annualAmount
-      )}씩 추가 투자해서`,
+      )}씩 투자해서`,
       descSuffix: " 쌓였습니다!",
       amount: Math.floor(props.annualSnowball),
     });

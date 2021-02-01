@@ -10,7 +10,7 @@ import {
   LabelSeries,
 } from "react-vis";
 import { ResultModel, InvestModel } from "../model/InvestModels";
-import useWindowDimensions from "../utils/useWindowDimensions";
+import useWindowDimensions from "../utils/useDimensions";
 import React, { useRef, useLayoutEffect, useEffect, useState } from "react";
 
 export interface ResultGraphViewProps {
@@ -25,7 +25,8 @@ const ResultGraphView = (props: ResultGraphViewProps) => {
   const [investLabelData, setInvestLabelData] = useState<Array<any>>([]);
   const [compareLineData, setCompareLineData] = useState<Array<any>>([]);
   const [compareLabelData, setCompareLabelData] = useState<Array<any>>([]);
-  const { width } = useWindowDimensions();
+  const typeRef: any = useRef(null)
+  const { width } = useWindowDimensions(typeRef);
 
   useEffect(() => {
     const investLineData = props.snowballList.map((snowball) => ({
@@ -87,11 +88,11 @@ const ResultGraphView = (props: ResultGraphViewProps) => {
   };
 
   return (
-    <div>
+    <div style={{marginTop:'1.0rem', marginLeft:'1.6rem', marginRight:'1.6rem'}} ref={typeRef}>
+      <label className="col-sm-12" style={{textAlign:'center'}}>20년간 투자금액 변화</label>
       <XYPlot
         margin={{ left: 0, right: 0 }}
         style={{
-          marginTop: "20px",
           alignContent: "center",
         }}
         yDomain={[props.initialAmount, props.totalSnowball]}
