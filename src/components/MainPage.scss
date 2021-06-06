@@ -1,4 +1,21 @@
 .parent {
     width: auto;
+    // align-content: center;
+
+    // @media (max-width: 680px) {
+    //     width: auto;
+    //     padding-left: 0px;
+    //     padding-right: 0px;
+    // }
 }
 
+#main {
+    width: 800px;
+    float: left;
+
+    @media (max-width: 680px) {
+        width: auto;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}

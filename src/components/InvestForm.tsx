@@ -38,7 +38,7 @@ const InvestForm = (props: InvestFormProps) => {
     setSelectedOption(options[0]);
   }, []);
   return (
-    <div>
+    <div style={{marginTop: "20px"}}>
       <div className="invest container-full">
         <div className="row input_amount">
           <div style={{ padding: 0 }} className="col-md-4">
@@ -93,7 +93,7 @@ const InvestForm = (props: InvestFormProps) => {
             allowNegative={false}
             thousandSeparator={true}
             suffix="%"
-            className="col-sm-4"
+            className="col-sm-2"
             displayType={"input"}
             placeholder="10%"
             onValueChange={(e) => {
@@ -104,7 +104,7 @@ const InvestForm = (props: InvestFormProps) => {
             }}
           />
           <Select
-            className="col-sm-4"
+            className="col-sm-6"
             options={options}
             onChange={(record: any) => {
               console.log(record);

@@ -99,54 +99,56 @@ const MainPage = (props: any) => {
   }
 
   return (
-    <div className="parent">
-      <div>
-        <label
-          className="col-md-12"
-          style={{
-            textAlign: "center",
-            fontSize: "24px",
-            fontWeight: "bold",
-            marginTop: "10px",
-          }}
-        >
-          투자해서 얼마나 벌 수 있을까?
-        </label>
-      </div>
+        <div id="main">
+          <div
+            style={{
+              marginTop: "20px"
+            }}
+          >
+            <label
+              style={{
+                textAlign: "center",
+                fontSize: "24px",
+                marginBottom: "0px"
+              }}
+            >
+              투자해서 얼마나 벌 수 있을까?
+            </label>
+          </div>
 
-      <div className="line" />
+          <div className="line" />
 
-      <InvestForm
-        refresh={refresh}
-        setInitialAmount={setInitialAmount}
-        setAnnualAmount={setAnnualAmount}
-        setInvestYears={setInvestYears}
-        setAverageYearYield={setAverageYearYield}
-        onSubmit={onSubmit}
-      />
-      <div className="line" style={{ marginTop: "10px" }} />
-
-      {resultData.totalSnowball > 0 && (
-        <div>
-          <ResultTextView
-            initialAmount={initialAmount}
-            annualAmount={annualAmount}
-            initialSnowball={resultData.initialSnowball}
-            annualSnowball={resultData.annualSnowball}
-            totalSnowball={resultData.totalSnowball}
-            investYears={resultData.investYears}
+          <InvestForm
+            refresh={refresh}
+            setInitialAmount={setInitialAmount}
+            setAnnualAmount={setAnnualAmount}
+            setInvestYears={setInvestYears}
+            setAverageYearYield={setAverageYearYield}
+            onSubmit={onSubmit}
           />
+          <div className="line" style={{ marginTop: "20px" }} />
 
-          <ResultGraphView
-            initialAmount={initialAmount}
-            totalSnowball={resultData.totalSnowball}
-            snowballList={resultData.snowballList}
-            compareList={resultData.compareList}
-            investYears={resultData.investYears}
-          />
+          {resultData.totalSnowball > 0 && (
+            <div>
+              <ResultTextView
+                initialAmount={initialAmount}
+                annualAmount={annualAmount}
+                initialSnowball={resultData.initialSnowball}
+                annualSnowball={resultData.annualSnowball}
+                totalSnowball={resultData.totalSnowball}
+                investYears={resultData.investYears}
+              />
+
+              <ResultGraphView
+                initialAmount={initialAmount}
+                totalSnowball={resultData.totalSnowball}
+                snowballList={resultData.snowballList}
+                compareList={resultData.compareList}
+                investYears={resultData.investYears}
+              />
+            </div>
+          )}
         </div>
-      )}
-    </div>
   );
 };
 

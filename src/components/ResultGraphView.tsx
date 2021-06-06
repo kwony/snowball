@@ -43,12 +43,8 @@ const ResultGraphView = (props: ResultGraphViewProps) => {
     }));
 
     setCompareLabelData(parseLabelData(props.compareList, 10));
-
     setInvestLineData(investLineData);
     setCompareLineData(compareLineData);
-    console.log('current width: ' + width)
-
-    console.log('i am here')
   }, [props, width]);
 
   const numberFormatter = (num: number, toFixed: number) => {
@@ -89,10 +85,10 @@ const ResultGraphView = (props: ResultGraphViewProps) => {
   };
 
   return (
-    <div style={{marginTop:'1.0rem', marginLeft:'1.6rem', marginRight:'1.6rem'}} ref={typeRef}>
-      <label className="col-sm-12" style={{textAlign:'center', fontWeight:'bold'}}>{props.investYears}년간 투자금액 변화</label>
+    <div ref={typeRef}>
+      <label className="col-sm-12" style={{textAlign:'center', fontWeight:'bold', margin: '5px'}}>{props.investYears}년간 투자금액 변화</label>
       <XYPlot
-        margin={{ left: 0, right: 0 }}
+        // margin={{ left: 20, right: 20 }}
         style={{
           alignContent: "center",
         }}
@@ -104,12 +100,21 @@ const ResultGraphView = (props: ResultGraphViewProps) => {
         <XAxis
           tickSize={4}
           tickTotal={2}
-          tickLabelAngle={-30}
+          tickLabelAngle={0}
           tickFormat={(tick: any) => `${tick}년`}
+          style={{
+            text: {
+              color: "black"
+            },
+            ticks: {
+              color: "black"
+            }
+          }}
         />
         <YAxis
           hideLine={true}
           orientation={"right"}
+          hideTicks={true}
           tickFormat={(tick: any) => numberFormatter(tick, 1)}
         />
         <LineSeries
